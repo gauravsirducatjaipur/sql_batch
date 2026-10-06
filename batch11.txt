@@ -1,0 +1,168 @@
+show databases;
+
+create database practiceset;
+
+use practiceset;
+
+
+create table studentDetail(
+	stu_id int not null unique,
+    name varchar(45) not null,
+    address varchar(255) not null,
+    city varchar(18) not null default 'Jaipur',
+    age int,
+    gender char(1) default 'F'
+);
+
+show tables;
+desc studentdetail;
+
+
+insert into studentdetail values(1, 'ram', 'mahesh nagar', 'ajmer', 23, 'M');
+
+select * from studentdetail;
+
+
+
+INSERT INTO studentdetail(stu_id, name, address, city, age, gender)VALUES
+(2, 'Amit Verma', 'Mansarovar', 'Jaipur', 21, 'M'),
+(3, 'Priya Sharma', 'Vaishali Nagar', 'Jaipur', 20, 'F');
+
+INSERT INTO studentdetail(stu_id, name, address, city, age, gender)VALUES
+(4, 'Ravi Kumar', 'Malviya Nagar', 'Jaipur', 22, 'M'),
+(5, 'Neha Gupta', 'Adarsh Nagar', 'Jaipur', 19, 'F'),
+(6, 'Mohit Singh', 'Shastri Nagar', 'Jaipur', 24, 'M'),
+(7, 'Pooja Meena', 'Sanganer', 'Jaipur', 21, 'F'),
+(8, 'Rahul Jain', 'Tonk Road', 'Jaipur', 23, 'M'),
+(9, 'Anjali Sharma', 'Civil Lines', 'Jaipur', 20, 'F'),
+(10, 'Vikas Yadav', 'Jagatpura', 'Jaipur', 22, 'M'),
+(11, 'Sneha Verma', 'Mansarovar', 'Jaipur', 19, 'F'),
+(12, 'Rohit Sharma', 'Jhotwara', 'Jaipur', 25, 'M'),
+(13, 'Kavita Kumari', 'Pratap Nagar', 'Jaipur', 22, 'F'),
+(14, 'Suresh Meena', 'Durgapura', 'Jaipur', 24, 'M'),
+(15, 'Riya Gupta', 'Bapu Nagar', 'Jaipur', 21, 'F'),
+(16, 'Deepak Singh', 'Vidhyadhar Nagar', 'Jaipur', 23, 'M'),
+(17, 'Nisha Jain', 'C-Scheme', 'Jaipur', 20, 'F'),
+(18, 'Arjun Sharma', 'Raja Park', 'Jaipur', 22, 'M'),
+(19, 'Simran Kaur', 'Sodala', 'Jaipur', 19, 'F'),
+(20, 'Karan Verma', 'Lal Kothi', 'Jaipur', 24, 'M'),
+
+(21, 'Manish Gupta', 'Mahesh Nagar', 'Jaipur', 21, 'M'),
+(22, 'Komal Sharma', 'Mansarovar', 'Jaipur', 20, 'F'),
+(23, 'Akash Meena', 'Sanganer', 'Jaipur', 23, 'M'),
+(24, 'Divya Singh', 'Malviya Nagar', 'Jaipur', 22, 'F'),
+(25, 'Nitin Jain', 'Vaishali Nagar', 'Jaipur', 25, 'M'),
+(26, 'Shreya Gupta', 'Jagatpura', 'Jaipur', 19, 'F'),
+(27, 'Harish Yadav', 'Jhotwara', 'Jaipur', 24, 'M'),
+(28, 'Muskan Sharma', 'Adarsh Nagar', 'Jaipur', 21, 'F'),
+(29, 'Gaurav Singh', 'Tonk Road', 'Jaipur', 23, 'M'),
+(30, 'Pallavi Meena', 'Pratap Nagar', 'Jaipur', 20, 'F'),
+
+(31, 'Ramesh Choudhary', 'Vaishali Nagar', 'Ajmer', 25, 'M'),
+(32, 'Sakshi Jain', 'Civil Lines', 'Ajmer', 20, 'F'),
+(33, 'Vivek Sharma', 'Adarsh Nagar', 'Ajmer', 22, 'M'),
+(34, 'Payal Verma', 'Ramganj', 'Ajmer', 21, 'F'),
+(35, 'Dinesh Singh', 'Kishangarh Road', 'Ajmer', 24, 'M'),
+(36, 'Isha Gupta', 'Madar', 'Ajmer', 19, 'F'),
+(37, 'Lokesh Meena', 'Beawar Road', 'Ajmer', 23, 'M'),
+(38, 'Tanya Sharma', 'Ana Sagar', 'Ajmer', 20, 'F'),
+(39, 'Sunil Kumar', 'Nasirabad Road', 'Ajmer', 25, 'M'),
+(40, 'Aarti Jain', 'Kaiser Ganj', 'Ajmer', 22, 'F'),
+
+(41, 'Rakesh Yadav', 'Talwandi', 'Kota', 23, 'M'),
+(42, 'Meena Sharma', 'Vigyan Nagar', 'Kota', 20, 'F'),
+(43, 'Sachin Gupta', 'Mahaveer Nagar', 'Kota', 21, 'M'),
+(44, 'Ritu Verma', 'Dadabari', 'Kota', 19, 'F'),
+(45, 'Ankit Jain', 'Indra Vihar', 'Kota', 24, 'M'),
+(46, 'Swati Sharma', 'Kunhadi', 'Kota', 22, 'F'),
+(47, 'Pankaj Meena', 'Borkheda', 'Kota', 25, 'M'),
+(48, 'Nidhi Gupta', 'Ladpura', 'Kota', 21, 'F'),
+(49, 'Ashish Singh', 'Jawahar Nagar', 'Kota', 23, 'M'),
+(50, 'Kiran Kumari', 'Gumanpura', 'Kota', 20, 'F'),
+
+(51, 'Vishal Sharma', 'Sardarpura', 'Jodhpur', 24, 'M'),
+(52, 'Rani Choudhary', 'Paota', 'Jodhpur', 21, 'F'),
+(53, 'Mukesh Singh', 'Shastri Nagar', 'Jodhpur', 23, 'M'),
+(54, 'Preeti Gupta', 'Chopasni Road', 'Jodhpur', 20, 'F'),
+(55, 'Rajesh Yadav', 'Pal Road', 'Jodhpur', 25, 'M'),
+(56, 'Jyoti Sharma', 'Ratanada', 'Jodhpur', 19, 'F'),
+(57, 'Naveen Jain', 'Basni', 'Jodhpur', 22, 'M'),
+(58, 'Shalini Verma', 'Sangariya', 'Jodhpur', 21, 'F'),
+(59, 'Tarun Meena', 'Mandore', 'Jodhpur', 24, 'M'),
+(60, 'Monika Gupta', 'Chopasni Housing Board', 'Jodhpur', 20, 'F'),
+
+(61, 'Abhishek Sharma', 'Hiran Magri', 'Udaipur', 22, 'M'),
+(62, 'Kajal Jain', 'Bhuwana', 'Udaipur', 20, 'F'),
+(63, 'Yogesh Meena', 'Pratap Nagar', 'Udaipur', 24, 'M'),
+(64, 'Nandini Gupta', 'Sector 4', 'Udaipur', 21, 'F'),
+(65, 'Manoj Singh', 'Surajpole', 'Udaipur', 23, 'M'),
+(66, 'Poonam Sharma', 'Shobhagpura', 'Udaipur', 19, 'F'),
+(67, 'Rajendra Yadav', 'Fatehpura', 'Udaipur', 25, 'M'),
+(68, 'Neelam Verma', 'Goverdhan Vilas', 'Udaipur', 22, 'F'),
+(69, 'Sandeep Jain', 'Bhopalpura', 'Udaipur', 21, 'M'),
+(70, 'Rashmi Gupta', 'Ashok Nagar', 'Udaipur', 20, 'F'),
+
+(71, 'Vijay Sharma', 'Hope Circus', 'Alwar', 24, 'M'),
+(72, 'Rekha Jain', 'Scheme No 10', 'Alwar', 21, 'F'),
+(73, 'Naresh Meena', 'Moti Dungri', 'Alwar', 23, 'M'),
+(74, 'Shivani Gupta', 'Kala Kuan', 'Alwar', 20, 'F'),
+(75, 'Rohit Yadav', 'Neemrana Road', 'Alwar', 25, 'M'),
+(76, 'Priti Sharma', 'Lajpat Nagar', 'Alwar', 19, 'F'),
+(77, 'Mahendra Singh', 'Shanti Kunj', 'Alwar', 22, 'M'),
+(78, 'Suman Verma', 'Arya Nagar', 'Alwar', 21, 'F'),
+(79, 'Kunal Jain', 'Matsya Nagar', 'Alwar', 24, 'M'),
+(80, 'Renu Gupta', 'Company Bagh', 'Alwar', 20, 'F'),
+
+(81, 'Aman Sharma', 'Rohini', 'Delhi', 22, 'M'),
+(82, 'Shweta Jain', 'Dwarka', 'Delhi', 21, 'F'),
+(83, 'Varun Gupta', 'Pitampura', 'Delhi', 24, 'M'),
+(84, 'Ananya Sharma', 'Janakpuri', 'Delhi', 20, 'F'),
+(85, 'Sumit Verma', 'Laxmi Nagar', 'Delhi', 23, 'M'),
+(86, 'Radhika Singh', 'Mayur Vihar', 'Delhi', 19, 'F'),
+(87, 'Nikhil Jain', 'Saket', 'Delhi', 25, 'M'),
+(88, 'Ayesha Khan', 'Jamia Nagar', 'Delhi', 21, 'F'),
+(89, 'Varsha Gupta', 'Karol Bagh', 'Delhi', 22, 'F'),
+(90, 'Aditya Sharma', 'Uttam Nagar', 'Delhi', 24, 'M'),
+
+(91, 'Sahil Meena', 'Mansarovar', 'Jaipur', 18, 'M'),
+(92, 'Ritika Sharma', 'Vaishali Nagar', 'Jaipur', 18, 'F'),
+(93, 'Yash Gupta', 'Malviya Nagar', 'Jaipur', 19, 'M'),
+(94, 'Aarushi Jain', 'Jagatpura', 'Jaipur', 18, 'F'),
+(95, 'Dev Sharma', 'Sanganer', 'Jaipur', 20, 'M'),
+(96, 'Anushka Verma', 'Pratap Nagar', 'Jaipur', 19, 'F'),
+(97, 'Kartik Meena', 'Jhotwara', 'Jaipur', 21, 'M'),
+(98, 'Tanvi Gupta', 'Raja Park', 'Jaipur', 20, 'F'),
+(99, 'Rohan Singh', 'Durgapura', 'Jaipur', 22, 'M'),
+(100, 'Ishita Sharma', 'Bapu Nagar', 'Jaipur', 19, 'F');
+
+
+select * from studentdetail;
+
+select * from studentdetail where gender='F';
+
+
+select stu_id, name, address from studentdetail where address="mahesh nagar";
+
+
+select * from studentdetail where address="mahesh nagar";
+
+select * from studentdetail where city="Jaipur";
+
+select * from studentdetail where gender="M";
+
+select * from studentdetail where city="Jaipur" and gender="M";
+
+select * from studentdetail where city="Jaipur" and gender="M" and age>23;
+
+
+select * from studentdetail;
+
+select * from studentdetail where address != "Shastri Nagar";
+
+select * from studentdetail;
+
+select * from studentdetail where city != "Jaipur";
+
+
+
+
