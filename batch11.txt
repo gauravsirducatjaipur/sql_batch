@@ -166,3 +166,144 @@ select * from studentdetail where city != "Jaipur";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+show tables;
+
+
+CREATE TABLE student (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    -- PERSONAL DETAILS
+    first_name      VARCHAR(50) NOT NULL,
+    last_name       VARCHAR(50) NOT NULL,
+    email           VARCHAR(100) UNIQUE NOT NULL,
+    contact_no      VARCHAR(14),
+    gender          ENUM('M', 'F', 'O') NOT NULL DEFAULT 'O',
+    class           ENUM('1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th') NOT NULL,
+    age             INT CHECK (age >= 5 AND age <= 18),
+    weight          FLOAT CHECK (weight > 0),
+    blood_group     VARCHAR(7) CHECK (blood_group IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
+    religion        VARCHAR(40),
+    address         VARCHAR(255),
+    city            VARCHAR(50),
+    pincode         INT CHECK (pincode BETWEEN 100000 AND 999999),
+    passing_status  BOOLEAN DEFAULT TRUE,
+    admission_date  DATE NOT NULL,
+    
+    -- ACADEMIC DETAILS
+    highest_education       VARCHAR(100),
+    current_course          VARCHAR(100),
+    current_year_semester   VARCHAR(50),
+    school_college_name     VARCHAR(150),
+    percentage_or_cgpa      VARCHAR(10),
+
+    -- PROFESSIONAL DETAILS
+    has_experience      BOOLEAN DEFAULT FALSE,
+    experience_years    FLOAT DEFAULT 0
+                        CHECK (experience_years >= 0 AND experience_years <= 50),
+    current_job_role    VARCHAR(100),
+    skills              VARCHAR(255),
+    fees                DECIMAL(10,2) NOT NULL CHECK (fees > 0),
+    created_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+desc student;
+
+select * from student;
+
+
+CREATE TABLE student_backup AS SELECT * FROM student;
+
+show tables;
+select * from student;
+
+select * from student_backup;
+
+drop table student_backup;
+
+INSERT INTO student
+(first_name, last_name, email, contact_no, gender, class, age, weight,
+blood_group, religion, address, city, pincode, passing_status,
+admission_date, highest_education, current_course, current_year_semester,
+school_college_name, percentage_or_cgpa, has_experience,
+experience_years, current_job_role, skills, fees)
+VALUES
+('Rahul', 'Sharma', 'rahul@gmail.com', '9876543210', 'M', '10th', 16, 55.5,
+'B+', 'Hindu', 'Mansarovar', 'Jaipur', 302020, TRUE,
+'2026-04-01', '9th', 'Science', '10th', 'DPS Jaipur', '85%',
+FALSE, 0, NULL, 'Python, SQL', 25000),
+
+('Priya', 'Verma', 'priya@gmail.com', '9876543211', 'F', '9th', 15, 48.2,
+'A+', 'Hindu', 'Vaishali Nagar', 'Jaipur', 302021, TRUE,
+'2026-04-02', '8th', 'Science', '9th', 'St. Xavier School', '90%',
+FALSE, 0, NULL, 'Python, HTML', 22000),
+
+('Aman', 'Gupta', 'aman@gmail.com', '9876543212', 'M', '8th', 14, 45.0,
+'O+', 'Hindu', 'Malviya Nagar', 'Jaipur', 302017, TRUE,
+'2026-04-03', '7th', 'Commerce', '8th', 'DAV School', '78%',
+FALSE, 0, NULL, 'SQL, Excel', 20000),
+
+('Neha', 'Singh', 'neha@gmail.com', '9876543213', 'F', '10th', 16, 52.4,
+'B-', 'Hindu', 'C-Scheme', 'Jaipur', 302001, TRUE,
+'2026-04-04', '9th', 'Arts', '10th', 'MGM School', '88%',
+FALSE, 0, NULL, 'HTML, CSS', 24000),
+
+('Rohit', 'Meena', 'rohit@gmail.com', '9876543214', 'M', '7th', 13, 42.8,
+'AB+', 'Hindu', 'Sanganer', 'Jaipur', 302029, TRUE,
+'2026-04-05', '6th', 'Science', '7th', 'Ryan School', '75%',
+FALSE, 0, NULL, 'Python', 18000);
+
+select * from student;
+
+create table student_backup as select * from student;
+
+select * from student_backup;
+
+desc student;
+desc student_backup;
+
+create table student_backup1 like student;
+show tables;
+desc student_backup1;
+select * from student_backup1;
+select * from student;
+
+
+
+create table sap like student;
+
+show tables;
+desc sap;
+insert into sap select * from student;
+select * from sap;
+show tables;
+
+ALTER TABLE sap ADD COLUMN father_name VARCHAR(50);
+ALTER TABLE sap DROP COLUMN father_name;
+ALTER TABLE sap RENAME COLUMN first_name TO fname;
+ALTER TABLE sap MODIFY COLUMN age INT NOT NULL;
+ALTER TABLE sap RENAME TO asp;
+
+show tables;
+desc asp;
+select * from asp;
+
+ALTER TABLE asp RENAME TO sap;
