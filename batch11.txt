@@ -307,3 +307,186 @@ desc asp;
 select * from asp;
 
 ALTER TABLE asp RENAME TO sap;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE student1 (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    contact_no VARCHAR(15) UNIQUE,
+    gender ENUM('M', 'F', 'O') NOT NULL,
+    class ENUM( '1st', '2nd',  '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th') NOT NULL,
+    age int CHECK (age IS NULL OR age BETWEEN 1 AND 100),
+    weight DECIMAL(10,2) CHECK (weight IS NULL OR weight > 0),
+    blood_group ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
+    religion VARCHAR(30),
+    address VARCHAR(255),
+    city VARCHAR(50) NOT NULL,
+    pincode VARCHAR(10),
+    passing_status BOOLEAN DEFAULT NULL,
+    admission_date DATE NOT NULL,
+    highest_education VARCHAR(50),
+    current_year VARCHAR(20),
+    school_name VARCHAR(100),
+    percentage DECIMAL(10,2) CHECK (percentage IS NULL OR percentage BETWEEN 0 AND 100),
+    skills TEXT,
+    fees DECIMAL(10,2) NOT NULL DEFAULT 0 CHECK (fees >= 0)
+);
+show tables;
+
+select * from student1;
+
+INSERT INTO student1
+(first_name, last_name, email, contact_no, gender, class, age, weight,
+blood_group, religion, address, city, pincode, passing_status,
+admission_date, highest_education, current_year, school_name,
+percentage, skills, fees)
+VALUES
+
+('Rahul', 'Sharma', 'rahul.sharma01@gmail.com', '9810000001', 'M', '10th', 16, 55.50,
+'B+', 'Hindu', 'Mansarovar', 'Jaipur', '302020', TRUE,
+'2026-04-01', '9th', '10th', 'DPS Jaipur', 85.00, 'Python, SQL', 25000),
+
+('Priya', 'Verma', 'priya.verma01@gmail.com', '9810000002', 'F', '9th', 15, 48.20,
+'A+', 'Hindu', 'Vaishali Nagar', 'Jaipur', '302021', TRUE,
+'2026-04-02', '8th', '9th', 'St. Xavier School', 90.00, 'Python, HTML', 22000),
+
+('Aman', 'Gupta', 'aman.gupta01@gmail.com', '9810000003', 'M', '8th', 14, 45.00,
+'O+', 'Hindu', 'Malviya Nagar', 'Jaipur', '302017', TRUE,
+'2026-04-03', '7th', '8th', 'DAV School', 78.00, 'SQL, Excel', 20000),
+
+('Neha', 'Singh', 'neha.singh01@gmail.com', '9810000004', 'F', '10th', 16, 52.40,
+'B-', 'Hindu', 'C-Scheme', 'Jaipur', '302001', TRUE,
+'2026-04-04', '9th', '10th', 'MGM School', 88.00, 'HTML, CSS', 24000),
+
+('Rohit', 'Meena', 'rohit.meena01@gmail.com', '9810000005', 'M', '7th', 13, 42.80,
+'AB+', 'Hindu', 'Sanganer', 'Jaipur', '302029', TRUE,
+'2026-04-05', '6th', '7th', 'Ryan School', 75.00, 'Python', 18000),
+
+('Vikas', 'Yadav', 'vikas.yadav01@gmail.com', '9810000006', 'M', '9th', 15, 50.50,
+'O+', 'Hindu', 'Civil Lines', 'Ajmer', '305001', TRUE,
+'2026-04-06', '8th', '9th', 'Tagore School', 82.00, 'Python, SQL', 21000),
+
+('Anjali', 'Jain', 'anjali.jain01@gmail.com', '9810000007', 'F', '8th', 14, 44.60,
+'A+', 'Jain', 'Adarsh Nagar', 'Ajmer', '305001', TRUE,
+'2026-04-07', '7th', '8th', 'Maheshwari School', 86.00, 'HTML, CSS', 19500),
+
+('Karan', 'Kumar', 'karan.kumar01@gmail.com', '9810000008', 'M', '10th', 16, 58.20,
+'B+', 'Hindu', 'Shastri Nagar', 'Jaipur', '302016', TRUE,
+'2026-04-08', '9th', '10th', 'St. Anselm School', 91.00, 'Python, Java', 26000),
+
+('Simran', 'Kaur', 'simran.kaur01@gmail.com', '9810000009', 'F', '9th', 15, 49.80,
+'O-', 'Sikh', 'Adarsh Nagar', 'New Delhi', '110001', TRUE,
+'2026-04-09', '8th', '9th', 'Guru Nanak School', 84.00, 'HTML, JavaScript', 23000),
+
+('Mohit', 'Saini', 'mohit.saini01@gmail.com', '9810000010', 'M', '7th', 13, 41.50,
+'A-', 'Hindu', 'Vidhyadhar Nagar', 'Jaipur', '302039', TRUE,
+'2026-04-10', '6th', '7th', 'Kendriya Vidyalaya', 77.00, 'Python', 17500),
+
+('Pooja', 'Agarwal', 'pooja.agarwal01@gmail.com', '9810000011', 'F', '10th', 16, 53.70,
+'AB+', 'Hindu', 'Shastri Nagar', 'Jaipur', '302016', TRUE,
+'2026-04-11', '9th', '10th', 'Neerja Modi School', 89.00, 'SQL, Excel', 25000),
+
+('Arjun', 'Rathore', 'arjun.rathore01@gmail.com', '9810000012', 'M', '6th', 12, 38.90,
+'B+', 'Hindu', 'Tonk Road', 'Jaipur', '302018', TRUE,
+'2026-04-12', '5th', '6th', 'St. Wilfred School', 73.00, 'Scratch, Python', 16000),
+
+('Kavita', 'Sharma', 'kavita.sharma01@gmail.com', '9810000013', 'F', '8th', 14, 46.30,
+'O+', 'Hindu', 'Sodala', 'Jaipur', '302006', TRUE,
+'2026-04-13', '7th', '8th', 'Narayana School', 81.00, 'HTML, CSS', 19000),
+
+('Deepak', 'Choudhary', 'deepak.choudhary01@gmail.com', '9810000014', 'M', '9th', 15, 51.70,
+'A+', 'Hindu', 'Murlipura', 'Jaipur', '302039', TRUE,
+'2026-04-14', '8th', '9th', 'DAV School', 79.00, 'Python, SQL', 21500),
+
+('Riya', 'Mehta', 'riya.mehta01@gmail.com', '9810000015', 'F', '7th', 13, 43.20,
+'B-', 'Hindu', 'Lal Kothi', 'Jaipur', '302015', TRUE,
+'2026-04-15', '6th', '7th', 'Delhi Public School', 87.00, 'Excel, SQL', 18500),
+
+('Suresh', 'Patel', 'suresh.patel01@gmail.com', '9810000016', 'M', '10th', 16, 60.10,
+'O+', 'Hindu', 'Durgapura', 'Jaipur', '302018', FALSE,
+'2026-04-16', '9th', '10th', 'MPS School', 32.00, 'Python, C++', 24500),
+
+('Sneha', 'Joshi', 'sneha.joshi01@gmail.com', '9810000017', 'F', '9th', 15, 47.90,
+'AB-', 'Hindu', 'Civil Lines', 'Ajmer', '305001', TRUE,
+'2026-04-17', '8th', '9th', 'Maharani School', 93.00, 'HTML, CSS, JS', 22500),
+
+('Manish', 'Bansal', 'manish.bansal01@gmail.com', '9810000018', 'M', '8th', 14, 48.60,
+'A+', 'Hindu', 'Mansarovar', 'Jaipur', '302020', TRUE,
+'2026-04-18', '7th', '8th', 'Seedling School', 80.00, 'SQL, Excel', 20500),
+
+('Nisha', 'Kumari', 'nisha.kumari01@gmail.com', '9810000019', 'F', '6th', 12, 39.70,
+'O+', 'Hindu', 'Ramganj', 'Jaipur', '302003', NULL,
+'2026-04-19', '5th', '6th', 'SVM School', NULL, 'Python', 15500),
+
+('Yash', 'Ahuja', 'yash.ahuja01@gmail.com', '9810000020', 'M', '10th', 16, 56.80,
+'B+', 'Hindu', 'Raja Park', 'Jaipur', '302004', TRUE,
+'2026-04-20', '9th', '10th', 'St. Xavier School', 92.00, 'Python, SQL, Java', 27000),
+
+('Meena', 'Soni', 'meena.soni01@gmail.com', '9810000021', 'F', '7th', 13, 42.10,
+'A-', 'Hindu', 'Gopalpura', 'Jaipur', '302019', TRUE,
+'2026-04-21', '6th', '7th', 'Maharaja School', 83.00, 'HTML, CSS', 17000),
+
+('Ravi', 'Mishra', 'ravi.mishra01@gmail.com', '9810000022', 'M', '9th', 15, 52.30,
+'B+', 'Hindu', 'Vaishali Nagar', 'Jaipur', '302021', TRUE,
+'2026-04-22', '8th', '9th', 'Ryan International', 78.00, 'Python, JavaScript', 22000),
+
+('Komal', 'Goyal', 'komal.goyal01@gmail.com', '9810000023', 'F', '8th', 14, 45.80,
+'O-', 'Hindu', 'C-Scheme', 'Jaipur', '302001', TRUE,
+'2026-04-23', '7th', '8th', 'MPS School', 88.00, 'SQL, Excel', 20000),
+
+('Tarun', 'Singh', 'tarun.singh01@gmail.com', '9810000024', 'M', '6th', 12, 37.80,
+'A+', 'Hindu', 'Sanganer', 'Jaipur', '302029', FALSE,
+'2026-04-24', '5th', '6th', 'Kendriya Vidyalaya', 29.00, 'Python', 15000),
+
+('Isha', 'Kapoor', 'isha.kapoor01@gmail.com', '9810000025', 'F', '10th', 16, 51.20,
+'AB+', 'Hindu', 'Navrangpura', 'Ahmedabad', '380009', TRUE,
+'2026-04-25', '9th', '10th', 'DPS Ahmedabad', 95.00, 'Python, SQL, HTML', 28000),
+
+('Amit', 'Joshi', 'amit.joshi01@gmail.com', '9810000026', 'M', '12th', 18, 64.50,
+'A+', 'Hindu', 'Mansarovar', 'Jaipur', '302020', TRUE,
+'2026-05-01', '10th', '12th', 'DPS Jaipur', 82.00, 'Python, HTML, CSS', 30000),
+
+('Ritu', 'Sharma', 'ritu.sharma01@gmail.com', '9810000027', 'F', '12th', 17, 51.50,
+'B+', 'Hindu', 'Vaishali Nagar', 'Jaipur', '302021', TRUE,
+'2026-05-02', '10th', '12th', 'St. Xavier School', 91.00, 'Excel, SQL', 28500),
+
+('Nikhil', 'Verma', 'nikhil.verma01@gmail.com', '9810000028', 'M', '11th', 17, 62.40,
+'O+', 'Hindu', 'Civil Lines', 'Ajmer', '305001', TRUE,
+'2026-05-03', '10th', '11th', 'Tagore School', 76.00, 'Python, SQL', 27000),
+
+('Pallavi', 'Gupta', 'pallavi.gupta01@gmail.com', '9810000029', 'F', '11th', 16, 50.20,
+'A+', 'Hindu', 'Malviya Nagar', 'Jaipur', '302017', TRUE,
+'2026-05-04', '10th', '11th', 'DAV School', 88.00, 'HTML, CSS', 26000),
+
+('Sandeep', 'Meena', 'sandeep.meena01@gmail.com', '9810000030', 'M', '12th', 18, 67.20,
+'B-', 'Hindu', 'Sanganer', 'Jaipur', '302029', TRUE,
+'2026-05-05', '10th', '12th', 'Kendriya Vidyalaya', 68.00, NULL, 29000);
+
+select * from student1;
+
+select distinct city from student1;
+
+select distinct blood_group from student1 where city="Jaipur" and address="Mansarovar";
+
+select * from student1 where address="Mansarovar" and city="Jaipur" and blood_group in ('B+','A+');
+
+SELECT * FROM student1 WHERE address = 'Mansarovar' AND city = 'Jaipur' AND blood_group IN (
+      SELECT DISTINCT blood_group FROM student1 WHERE city = 'Jaipur' AND address = 'Mansarovar'
+);
