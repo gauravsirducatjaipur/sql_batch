@@ -490,3 +490,290 @@ select * from student1 where address="Mansarovar" and city="Jaipur" and blood_gr
 SELECT * FROM student1 WHERE address = 'Mansarovar' AND city = 'Jaipur' AND blood_group IN (
       SELECT DISTINCT blood_group FROM student1 WHERE city = 'Jaipur' AND address = 'Mansarovar'
 );
+
+
+
+
+
+
+
+
+✅ FINAL SQL
+1. Create Database
+CREATE DATABASE shopdb;
+USE shopdb;
+
+2. Country Table
+CREATE TABLE country (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    city VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    UNIQUE (city, country)
+);
+
+3. Address Table
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    address VARCHAR(255) NOT NULL,
+    city_id INT NOT NULL,
+    postal_code VARCHAR(20),
+    phone VARCHAR(15) UNIQUE,
+
+    FOREIGN KEY (city_id)
+    REFERENCES country(city_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+4. Customer Table ✅ FIXED
+CREATE TABLE customer (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT CHECK (age >= 18),
+
+    address_id INT NOT NULL,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (address_id)
+    REFERENCES address(address_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+5. Payment Table ✅ FIXED
+CREATE TABLE payment (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
+    mode VARCHAR(30) NOT NULL,
+    payment_date DATE DEFAULT (CURRENT_DATE),
+
+    FOREIGN KEY (customer_id)
+    REFERENCES customer(customer_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
+
+FINAL RELATIONSHIP
+
+country
+   ↑
+address
+   ↑
+customer
+   ↑
+payment
+
+
+
+
+INSERT INTO country (city, country) VALUES
+('Jaipur', 'India'),
+('Delhi', 'India'),
+('Mumbai', 'India'),
+('Pune', 'India'),
+('Lucknow', 'India'),
+('Agra', 'India'),
+('Jodhpur', 'India'),
+('Udaipur', 'India'),
+('Ahmedabad', 'India'),
+('Surat', 'India'),
+('Bengaluru', 'India'),
+('Hyderabad', 'India'),
+('Chennai', 'India'),
+('Kolkata', 'India'),
+('Bhopal', 'India'),
+('Indore', 'India'),
+('Chandigarh', 'India'),
+('Amritsar', 'India'),
+('Patna', 'India'),
+('Ranchi', 'India'),
+('Kathmandu', 'Nepal'),
+('Pokhara', 'Nepal'),
+('Lalitpur', 'Nepal'),
+('Biratnagar', 'Nepal'),
+('Dhaka', 'Bangladesh'),
+('Chittagong', 'Bangladesh'),
+('Khulna', 'Bangladesh'),
+('Sylhet', 'Bangladesh'),
+('London', 'United Kingdom'),
+('Manchester', 'United Kingdom'),
+('Birmingham', 'United Kingdom'),
+('Liverpool', 'United Kingdom'),
+('New York', 'United States'),
+('Chicago', 'United States'),
+('Los Angeles', 'United States'),
+('Houston', 'United States'),
+('Toronto', 'Canada'),
+('Vancouver', 'Canada'),
+('Sydney', 'Australia'),
+('Melbourne', 'Australia');
+
+INSERT INTO address (address, city_id, postal_code, phone) VALUES
+('Mansarovar', 1, '302020', '9000000001'),
+('Vaishali Nagar', 2, '110001', '9000000002'),
+('Andheri West', 3, '400053', '9000000003'),
+('Hinjewadi', 4, '411057', '9000000004'),
+('Gomti Nagar', 5, '226010', '9000000005'),
+('Taj Ganj', 6, '282001', '9000000006'),
+('Shastri Nagar', 7, '342003', '9000000007'),
+('Hiran Magri', 8, '313002', '9000000008'),
+('Navrangpura', 9, '380009', '9000000009'),
+('Adajan', 10, '395009', '9000000010'),
+('Whitefield', 11, '560066', '9000000011'),
+('Madhapur', 12, '500081', '9000000012'),
+('T Nagar', 13, '600017', '9000000013'),
+('Salt Lake', 14, '700091', '9000000014'),
+('Arera Colony', 15, '462016', '9000000015'),
+('Vijay Nagar', 16, '452010', '9000000016'),
+('Sector 17', 17, '160017', '9000000017'),
+('Ranjit Avenue', 18, '143001', '9000000018'),
+('Boring Road', 19, '800001', '9000000019'),
+('Morabadi', 20, '834008', '9000000020'),
+('Thamel', 21, '44600', '9000000021'),
+('Lakeside', 22, '33700', '9000000022'),
+('Jawalakhel', 23, '44700', '9000000023'),
+('Traffic Chowk', 24, '56613', '9000000024'),
+('Dhanmondi', 25, '1205', '9000000025'),
+('Agrabad', 26, '4100', '9000000026'),
+('Sonadanga', 27, '9100', '9000000027'),
+('Zindabazar', 28, '3100', '9000000028'),
+('Westminster', 29, 'SW1A', '9000000029'),
+('Didsbury', 30, 'M20', '9000000030'),
+('Edgbaston', 31, 'B15', '9000000031'),
+('Anfield', 32, 'L4', '9000000032'),
+('Manhattan', 33, '10001', '9000000033'),
+('Hyde Park', 34, '60615', '9000000034'),
+('Hollywood', 35, '90028', '9000000035'),
+('Downtown', 36, '77002', '9000000036'),
+('North York', 37, 'M2N', '9000000037'),
+('Richmond', 38, 'V6Y', '9000000038'),
+('Parramatta', 39, '2150', '9000000039'),
+('Carlton', 40, '3053', '9000000040');
+
+
+INSERT INTO customer
+(full_name, email, age, address_id, created_at)
+VALUES
+('Amit Sharma', 'amit.sharma@example.com', 25, 1, '2026-01-05 10:30:00'),
+('Priya Verma', 'priya.verma@example.com', 29, 2, '2026-01-07 11:15:00'),
+('Rahul Singh', 'rahul.singh@example.com', 32, 3, '2026-01-10 09:45:00'),
+('Neha Gupta', 'neha.gupta@example.com', 24, 4, '2026-01-12 12:00:00'),
+('Vikas Yadav', 'vikas.yadav@example.com', 35, 5, '2026-01-15 14:20:00'),
+('Pooja Mehta', 'pooja.mehta@example.com', 27, 6, '2026-01-18 16:10:00'),
+('Rohit Jain', 'rohit.jain@example.com', 41, 7, '2026-01-20 10:00:00'),
+('Anjali Joshi', 'anjali.joshi@example.com', 22, 8, '2026-01-22 13:30:00'),
+('Karan Patel', 'karan.patel@example.com', 30, 9, '2026-01-25 15:45:00'),
+('Sneha Shah', 'sneha.shah@example.com', 26, 10, '2026-01-27 09:15:00'),
+('Arjun Reddy', 'arjun.reddy@example.com', 38, 11, '2026-02-01 11:00:00'),
+('Kavita Rao', 'kavita.rao@example.com', 34, 12, '2026-02-03 12:45:00'),
+('Suresh Kumar', 'suresh.kumar@example.com', 45, 13, '2026-02-05 14:30:00'),
+('Meena Das', 'meena.das@example.com', 28, 14, '2026-02-07 16:00:00'),
+('Deepak Jain', 'deepak.jain@example.com', 31, 15, '2026-02-09 10:20:00'),
+('Ritu Malhotra', 'ritu.malhotra@example.com', 23, 16, '2026-02-11 11:40:00'),
+('Manish Soni', 'manish.soni@example.com', 36, 17, '2026-02-13 13:15:00'),
+('Simran Kaur', 'simran.kaur@example.com', 27, 18, '2026-02-15 15:30:00'),
+('Ajay Mishra', 'ajay.mishra@example.com', 40, 19, '2026-02-17 09:50:00'),
+('Nisha Kumari', 'nisha.kumari@example.com', 21, 20, '2026-02-19 12:25:00'),
+('Sanjay Thapa', 'sanjay.thapa@example.com', 33, 21, '2026-02-21 14:10:00'),
+('Sita Gurung', 'sita.gurung@example.com', 25, 22, '2026-02-23 16:45:00'),
+('Ramesh Shrestha', 'ramesh.shrestha@example.com', 37, 23, '2026-02-25 10:35:00'),
+('Maya Karki', 'maya.karki@example.com', 29, 24, '2026-02-27 11:55:00'),
+('Tanvir Ahmed', 'tanvir.ahmed@example.com', 31, 25, '2026-03-01 13:20:00'),
+('Nusrat Jahan', 'nusrat.jahan@example.com', 26, 26, '2026-03-03 15:05:00'),
+('Imran Hossain', 'imran.hossain@example.com', 42, 27, '2026-03-05 09:30:00'),
+('Farhana Islam', 'farhana.islam@example.com', 24, 28, '2026-03-07 12:10:00'),
+('Oliver Smith', 'oliver.smith@example.com', 35, 29, '2026-03-09 14:40:00'),
+('Emily Brown', 'emily.brown@example.com', 28, 30, '2026-03-11 16:25:00'),
+('Harry Wilson', 'harry.wilson@example.com', 39, 31, '2026-03-13 10:15:00'),
+('Sophie Taylor', 'sophie.taylor@example.com', 23, 32, '2026-03-15 11:35:00'),
+('James Miller', 'james.miller@example.com', 44, 33, '2026-03-17 13:50:00'),
+('Emma Davis', 'emma.davis@example.com', 30, 34, '2026-03-19 15:20:00'),
+('Noah Garcia', 'noah.garcia@example.com', 27, 35, '2026-03-21 09:40:00'),
+('Sophia Martinez', 'sophia.martinez@example.com', 32, 36, '2026-03-23 12:30:00'),
+('Liam Anderson', 'liam.anderson@example.com', 36, 37, '2026-03-25 14:15:00'),
+('Ava Thomas', 'ava.thomas@example.com', 22, 38, '2026-03-27 16:35:00'),
+('Ethan White', 'ethan.white@example.com', 41, 39, '2026-03-29 10:50:00'),
+('Isabella Harris', 'isabella.harris@example.com', 29, 40, '2026-03-31 13:05:00');
+
+INSERT INTO payment
+(customer_id, amount, mode, payment_date)
+VALUES
+(1, 1500.00, 'UPI', '2026-01-05'),
+(2, 2500.00, 'Card', '2026-01-07'),
+(3, 1200.00, 'Cash', '2026-01-10'),
+(4, 3500.00, 'Net Banking', '2026-01-12'),
+(5, 1800.00, 'UPI', '2026-01-15'),
+(6, 4200.00, 'Card', '2026-01-18'),
+(7, 2100.00, 'Cash', '2026-01-20'),
+(8, 1600.00, 'UPI', '2026-01-22'),
+(9, 5000.00, 'Net Banking', '2026-01-25'),
+(10, 2300.00, 'Card', '2026-01-27'),
+(11, 3100.00, 'UPI', '2026-02-01'),
+(12, 2700.00, 'Cash', '2026-02-03'),
+(13, 4500.00, 'Card', '2026-02-05'),
+(14, 1900.00, 'UPI', '2026-02-07'),
+(15, 2200.00, 'Net Banking', '2026-02-09'),
+(16, 1700.00, 'Cash', '2026-02-11'),
+(17, 3800.00, 'Card', '2026-02-13'),
+(18, 2600.00, 'UPI', '2026-02-15'),
+(19, 2900.00, 'Net Banking', '2026-02-17'),
+(20, 1400.00, 'Cash', '2026-02-19'),
+(21, 3300.00, 'UPI', '2026-02-21'),
+(22, 2000.00, 'Card', '2026-02-23'),
+(23, 4100.00, 'Net Banking', '2026-02-25'),
+(24, 2400.00, 'UPI', '2026-02-27'),
+(25, 3600.00, 'Cash', '2026-03-01'),
+(26, 2800.00, 'Card', '2026-03-03'),
+(27, 5200.00, 'UPI', '2026-03-05'),
+(28, 1300.00, 'Net Banking', '2026-03-07'),
+(29, 4700.00, 'Card', '2026-03-09'),
+(30, 3100.00, 'UPI', '2026-03-11'),
+(31, 3900.00, 'Cash', '2026-03-13'),
+(32, 1800.00, 'Card', '2026-03-15'),
+(33, 6000.00, 'Net Banking', '2026-03-17'),
+(34, 2700.00, 'UPI', '2026-03-19'),
+(35, 3400.00, 'Cash', '2026-03-21'),
+(36, 2900.00, 'Card', '2026-03-23'),
+(37, 4300.00, 'UPI', '2026-03-25'),
+(38, 1600.00, 'Net Banking', '2026-03-27'),
+(39, 4800.00, 'Card', '2026-03-29'),
+(40, 2500.00, 'UPI', '2026-03-31'),
+(1, 800.00, 'Card', '2026-04-02'),
+(2, 1200.00, 'UPI', '2026-04-03'),
+(3, 600.00, 'Cash', '2026-04-04'),
+(5, 900.00, 'Net Banking', '2026-04-05'),
+(7, 1500.00, 'UPI', '2026-04-06'),
+(9, 2000.00, 'Card', '2026-04-07'),
+(11, 1100.00, 'Cash', '2026-04-08'),
+(13, 1700.00, 'UPI', '2026-04-09'),
+(15, 1300.00, 'Card', '2026-04-10'),
+(17, 2200.00, 'Net Banking', '2026-04-11'),
+(19, 1000.00, 'UPI', '2026-04-12'),
+(21, 1800.00, 'Cash', '2026-04-13'),
+(23, 1400.00, 'Card', '2026-04-14'),
+(25, 2100.00, 'UPI', '2026-04-15'),
+(27, 1600.00, 'Net Banking', '2026-04-16'),
+(29, 1900.00, 'Cash', '2026-04-17'),
+(31, 1200.00, 'UPI', '2026-04-18'),
+(33, 2500.00, 'Card', '2026-04-19'),
+(35, 1700.00, 'Net Banking', '2026-04-20'),
+(40, 900.00, 'Cash', '2026-04-21');
+
+
+
+SELECT COUNT(*) AS total_countries FROM country;
+
+SELECT COUNT(*) AS total_addresses FROM address;
+
+SELECT COUNT(*) AS total_customers FROM customer;
+
+SELECT COUNT(*) AS total_payments FROM payment;
+
+
+select * from customer join payment join address join country;
