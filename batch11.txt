@@ -777,3 +777,164 @@ SELECT COUNT(*) AS total_payments FROM payment;
 
 
 select * from customer join payment join address join country;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Level 1 — Basic JOIN questions(INNER JOIN)
+
+1. Display each customer's full name and their payment amount.Tables: customer + payment
+
+
+2. Display customer names along with their payment mode.Tables: customer + payment
+
+
+3. Display customer names, payment amounts, and payment dates.Tables: customer + payment
+
+
+4. Display customer names with their address.Tables: customer + address
+
+
+5. Display customer names with their city.Tables: customer + address + country
+
+
+6. Display customer names with their city and country.Tables: Three tables: customer, address, country
+
+
+7. Display customer names, phone numbers, and postal codes.Tables: customer + address
+
+
+8. Display customer names with their email and payment mode.Tables: customer + payment
+
+
+9. Display all payments with customer names, sorted by payment amount in descending order.Tables: ORDER BY
+
+
+10. Display customer names, city, payment amount, and payment date.Tables: JOIN all four tables
+
+
+
+
+Level 2 — Filtering with JOIN(JOIN + WHERE + ORDER BY)
+11. Display customer names and payment amounts only for customers who paid using UPI.
+
+
+12. Display customer names and payment details for payments greater than ₹3,000.
+
+
+13. Display customer names and payment dates for payments made during March 2026.
+
+
+14. Display customers who paid using Card and whose age is greater than 30.
+
+
+15. Display customer names and city names for customers living in India.
+
+
+16. Display customer names and payment details for payments made after 31 March 2026.
+
+
+17. Display customers living in London, along with their payment amounts and modes.
+
+
+18. Display customer names and payment details where the payment mode is either Cash or Net Banking.
+
+
+19. Display customer names, cities, and payment amounts for customers whose payment exceeds ₹2,500 and who live in India.
+
+
+20. Display all payment records for customers whose names start with the letter A.
+
+
+
+
+Level 3 — Aggregate functions with JOIN(JOIN + GROUP BY + HAVING)
+21. Display each customer's name and their total payment amount.
+
+
+22. Display each customer's name and the number of payments they have made.
+
+
+23. Display each customer's name and their highest payment amount.
+
+
+24. Display each customer's name and their lowest payment amount.
+
+
+25. Display each payment mode and the total amount collected through that mode.
+
+
+26. Display each city and the total payment collected from customers living there.
+
+
+27. Display each country and the total amount collected from its customers.
+
+
+28. Display each customer whose total payments exceed ₹4,000.
+
+
+29. Display each payment mode and the number of transactions made using that mode.
+
+
+30. Display the average payment amount for each country.
+
+
+
+Level 4 — Advanced JOIN questions(LEFT JOIN + subqueries)
+31. Display all customers, including those who have not made any payment, using LEFT JOIN.
+
+
+32. Display customers who have never made a payment.
+
+
+33. Display all cities, including cities that have no registered customers.
+
+
+34. Display customers who have made more than one payment.
+
+
+35. Display the customer who has made the highest total payment.
+
+
+36. Display the customer name, city, and total amount paid, sorted from highest to lowest total.
+
+
+37. Display customers whose total payment is greater than the average total payment per customer.
+
+
+38. Display the country with the highest total payment collection.
+
+
+39. Display customers who have made payments using more than one distinct payment mode.
+
+
+40. Display each customer's name, city, country, total payments, transaction count, and most recent payment date.
