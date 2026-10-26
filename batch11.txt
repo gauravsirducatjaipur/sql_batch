@@ -938,3 +938,500 @@ Level 4 — Advanced JOIN questions(LEFT JOIN + subqueries)
 
 
 40. Display each customer's name, city, country, total payments, transaction count, and most recent payment date.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+take an example of customer table and payment table
+
+⭐ 1. Create Database & Use
+CREATE DATABASE shopdb;
+USE shopdb;
+
+
+⭐ 2. CREATE TABLE with ALL Constraints
+Customer Table
+CREATE TABLE customer (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT CHECK (age >= 18),
+    city VARCHAR(50) DEFAULT 'Unknown',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+⭐ Payment Table
+CREATE TABLE payment (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
+    payment_date DATE DEFAULT (CURRENT_DATE),
+
+    -- FOREIGN KEY Constraint
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
+⭐ 3. Country Table (Create First)
+
+Because address table depends on country table.
+CREATE TABLE country (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    city VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    UNIQUE (city, country)
+);
+
+⭐ 4. Address Table
+
+Address table will connect with country table using Foreign Key
+
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    address VARCHAR(255) NOT NULL,
+    city_id INT NOT NULL,
+    postal_code VARCHAR(20),
+    phone VARCHAR(15) UNIQUE,
+
+    -- Foreign Key
+    FOREIGN KEY (city_id)
+    REFERENCES country(city_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
+
+
+address table
+address_id
+address
+city_id
+postal_code
+phone
+
+country table
+city_id
+city
+country
+
+
+==========================================================
+payment → customer
+customer → address
+address → country
+
+
+✅ FINAL SQL
+1. Create Database
+CREATE DATABASE shopdb;
+USE shopdb;
+
+2. Country Table
+CREATE TABLE country (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    city VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    UNIQUE (city, country)
+);
+
+3. Address Table
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    address VARCHAR(255) NOT NULL,
+    city_id INT NOT NULL,
+    postal_code VARCHAR(20),
+    phone VARCHAR(15) UNIQUE,
+
+    FOREIGN KEY (city_id)
+    REFERENCES country(city_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+4. Customer Table ✅ FIXED
+CREATE TABLE customer (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    age INT CHECK (age >= 18),
+
+    address_id INT NOT NULL,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (address_id)
+    REFERENCES address(address_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+5. Payment Table ✅ FIXED
+CREATE TABLE payment (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
+    mode VARCHAR(30) NOT NULL,
+    payment_date DATE DEFAULT (CURRENT_DATE),
+
+    FOREIGN KEY (customer_id)
+    REFERENCES customer(customer_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
+
+FINAL RELATIONSHIP
+
+country
+   ↑
+address
+   ↑
+customer
+   ↑
+payment
+
+
+
+SELECT c.full_name, p.amount, p.mode, p.payment_date, a.address, co.city, co.country
+FROM customer c
+JOIN payment p
+ON c.customer_id = p.customer_id
+JOIN address a
+ON c.address_id = a.address_id
+JOIN country co
+ON a.city_id = co.city_id;
+
+
+
+
+
+
+SELECT c.full_name, p.amount, p.mode, p.payment_date
+FROM customer c
+JOIN payment p
+ON c.customer_id = p.customer_id;
+
+
+
+
+
+SELECT c.full_name, p.amount, p.mode, p.payment_date, a.address, co.city, co.country
+FROM customer c
+
+JOIN payment p
+ON c.customer_id = p.customer_id
+
+JOIN address a
+ON c.address_id = a.address_id
+
+JOIN country co
+ON a.city_id = co.city_id;
+
+
+
+
+============================================================
+🔗 One-to-One Relationship (1 : 1) — Simple Explanation
+🧠 Concept
+
+One-to-One relationship ka matlab:
+
+👉 Table A ka ek record
+👉 Table B ke sirf ek record se linked hoga
+Na zyada, na kam.
+
+
+🎯 Real Life Example: Person and Passport
+✔ Ek person ka sirf ek passport hota hai
+✔ Ek passport sirf ek person ka hota hai
+
+Person 1  ⟷  1 Passport
+
+
+✅ STEP 1: Structure (Tables Design)
+We create 2 tables:
+
+person
+passport
+
+
+
+👨 Person Table
+CREATE TABLE person (
+    person_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT
+);
+
+
+
+🛂 Passport Table
+⚠ Important: person_id must be UNIQUE
+CREATE TABLE passport (
+    passport_id INT AUTO_INCREMENT PRIMARY KEY,
+    passport_number VARCHAR(20) UNIQUE,
+    person_id INT UNIQUE,
+
+    FOREIGN KEY (person_id)
+    REFERENCES person(person_id)
+    ON DELETE CASCADE
+);
+
+
+
+🧠 Why UNIQUE is used?
+Because:
+One person → one passport only
+
+UNIQUE ensures:
+❌ One person cannot have 2 passports
+
+
+✅ Final Structure
+person
+-------
+person_id (PK)
+name
+age
+
+
+passport
+--------
+passport_id (PK)
+passport_number
+person_id (FK + UNIQUE)
+
+
+
+
+Insert Person Data
+INSERT INTO person (name, age) VALUES('Rohit', 25),('Madan', 30);
+
+Insert Passport
+INSERT INTO passport (passport_number, person_id) VALUES ('IND12345', 1), ('IND67890', 2);
+
+
+✅ STEP 3: JOIN Query
+Show Person with Passport
+
+SELECT p.name, p.age, pa.passport_number
+FROM person p
+JOIN passport pa
+ON p.person_id = pa.person_id;
+
+
+
+✅ STEP 4: Verify One-to-One
+Try this:
+
+INSERT INTO passport (passport_number, person_id) VALUES ('IND99999', 1);
+
+❌ ERROR ayega
+Because:
+person_id UNIQUE hai
+
+One person → only one passport allowed
+
+
+
+🧠 Real Interview Examples
+| Table 1  | Table 2  |
+| -------- | -------- |
+| Person   | Passport |
+| Person   | Aadhaar  |
+| User     | Profile  |
+| Employee | Locker   |
+
+
+🧠 Golden Rule
+
+One-to-One me:
+👉 Foreign key UNIQUE hoti hai
+
+
+
+
+
+Now we will learn 3 relationships (One-to-One, One-to-Many, Many-to-Many) in single(project) example.
+
+🧑‍🎓 Project: College Database
+Hum 3 tables use karenge:
+Student
+ID Card
+Course
+
+
+1️⃣ One-to-One Relationship
+🎯 Example: Student ↔ ID Card
+
+Ek student ka ek hi ID card hota hai
+
+
+✅ Structure
+CREATE TABLE student (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT
+);
+
+
+CREATE TABLE id_card (
+    card_id INT AUTO_INCREMENT PRIMARY KEY,
+    card_number VARCHAR(50) UNIQUE,
+    student_id INT UNIQUE,
+
+    FOREIGN KEY (student_id)
+    REFERENCES student(student_id)
+    ON DELETE CASCADE
+);
+
+
+✅ Insert
+INSERT INTO student (name, age) VALUES ('Rohit', 20), ('Madan', 22);
+
+INSERT INTO id_card (card_number, student_id) VALUES ('CARD101', 1), ('CARD102', 2);
+
+
+
+✅ Query
+SELECT s.name, i.card_number
+FROM student s
+JOIN id_card i
+ON s.student_id = i.student_id;
+
+
+2️⃣ One-to-Many Relationship
+🎯 Example: Student → Course
+
+Ek student multiple courses le sakta hai
+
+✅ Structure
+CREATE TABLE course (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(100),
+    student_id INT,
+
+    FOREIGN KEY (student_id)
+    REFERENCES student(student_id)
+    ON DELETE CASCADE
+);
+
+
+✅ Insert
+INSERT INTO course (course_name, student_id) VALUES ('Python', 1), ('SQL', 1), ('Java', 2);
+
+
+SELECT student.name, course.course_name
+FROM student
+JOIN course
+ON student.student_id = course.student_id;
+
+
+✅ Output
+| student | course |
+| ------- | ------ |
+| Rohit   | Python |
+| Rohit   | SQL    |
+| Madan   | Java   |
+
+
+
+3️⃣ Many-to-Many Relationship
+🎯 Example:
+
+Student can join multiple courses
+Course can have multiple students
+
+✅ Structure
+We need 3 tables
+
+Student Table
+(already created)
+
+Course Table
+CREATE TABLE courses (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(100)
+);
+
+
+
+Junction Table
+CREATE TABLE student_course (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+
+    FOREIGN KEY (student_id)
+    REFERENCES student(student_id),
+
+    FOREIGN KEY (course_id)
+    REFERENCES courses(course_id)
+);
+
+
+
+✅ Insert
+INSERT INTO courses (course_name) VALUES ('Python'), ('SQL');
+INSERT INTO student_course (student_id, course_id) VALUES (1,1), (1,2), (2,1);
+
+
+
+✅ Query
+SELECT student.name, courses.course_name
+FROM student_course
+
+JOIN student
+ON student.student_id = student_course.student_id
+
+JOIN courses
+ON courses.course_id = student_course.course_id;
+
+
+
+🧠 Final Summary
+
+| Relationship | Foreign Key    |
+| ------------ | -------------- |
+| One-to-One   | UNIQUE FK      |
+| One-to-Many  | Normal FK      |
+| Many-to-Many | Junction Table |
+
+
+
+🎯 Real World Examples
+| Relationship | Example         |
+| ------------ | --------------- |
+| One-to-One   | Person-Passport |
+| One-to-Many  | Customer-Orders |
+| Many-to-Many | Student-Courses |
+
+
+
+
+=============================================================================
+🎓 Full SQL Project: College Management System (Interview Level)
+This project includes:
+
+✔ One-to-One
+✔ One-to-Many
+✔ Many-to-Many
+✔ All JOIN queries
+✔ Real interview structure

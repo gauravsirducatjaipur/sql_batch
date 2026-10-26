@@ -4,47 +4,61 @@ USE shopdb1;
 -- Level 1 — Basic JOIN
 -- 1. Display each customer's name and payment amount.
 SELECT c.full_name, p.amount
-FROM customer AS c	
-INNER JOIN payment AS p
+FROM
+customer AS c	
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id;
 
 
 -- 2. Display customer names along with their payment mode.
 SELECT c.full_name, p.mode
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id;
 
 
 -- 3. Display customer names, payment amounts, and payment dates.
 SELECT c.full_name, p.amount, p.payment_date
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id;
 
 
 -- 4. Display customer names with their address.
 SELECT c.full_name, a.address
-FROM customer AS c
-INNER JOIN address AS a
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id;
 
 
 -- 5. Display customer names with their city.
 SELECT c.full_name, co.city
-FROM customer AS c
-INNER JOIN address AS a
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id
-INNER JOIN country AS co
+JOIN
+country AS co
 ON a.city_id = co.city_id;
 
 
 -- 6. Display customer names with their city and country.
 SELECT c.full_name, co.city, co.country
-FROM customer AS c
-INNER JOIN address AS a
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id
-INNER JOIN country AS co
+JOIN
+country AS co
 ON a.city_id = co.city_id;
 
 
@@ -57,123 +71,149 @@ ON c.address_id = a.address_id;
 
 -- 8. Display customer names with their email and payment mode.
 SELECT c.full_name, c.email, p.mode
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id;
 
 
 -- 9. Display all payments with customer names, sorted by payment amount in descending order.
 SELECT c.full_name, p.amount, p.payment_date
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 ORDER BY p.amount DESC;
 
 
 -- 10. Display customer names, city, payment amount, and payment date.
-SELECT
-    c.full_name,
-    co.city,
-    p.amount,
-    p.payment_date
-FROM customer AS c
-INNER JOIN address AS a
+SELECT c.full_name, co.city, p.amount, p.payment_date
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id
-INNER JOIN country AS co
+JOIN
+country AS co
 ON a.city_id = co.city_id
-INNER JOIN payment AS p
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id;
 
 
 -- Level 2 — Filtering with JOIN
 -- 11. Display customer names and payment amounts for UPI payments.
 SELECT c.full_name, p.amount
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 WHERE p.mode = 'UPI';
 
 
 -- 12. Display customer names and payment details for payments greater than ₹3,000.
 SELECT c.full_name, p.amount, p.mode, p.payment_date
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 WHERE p.amount > 3000;
 
 
 -- 13. Display customer names and payment dates for payments made during March 2026.
 SELECT c.full_name, p.payment_date, p.amount
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN payment AS p
 ON c.customer_id = p.customer_id
 WHERE p.payment_date BETWEEN '2026-03-01' AND '2026-03-31';
 
 
 -- 14. Display customers who paid using Card and whose age is greater than 30.
 SELECT c.full_name, c.age, p.amount, p.mode
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
-WHERE p.mode = 'Card'
-AND c.age > 30;
+WHERE p.mode = 'Card' AND c.age > 30;
 
 
 -- 15. Display customer names and city names for customers living in India.
 SELECT c.full_name, co.city, co.country
-FROM customer AS c
-INNER JOIN address AS a
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id
-INNER JOIN country AS co
+JOIN
+country AS co
 ON a.city_id = co.city_id
 WHERE co.country = 'India';
 
 
 -- 16. Display customer names and payment details for payments made after 31 March 2026.
 SELECT c.full_name, p.amount, p.mode, p.payment_date
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 WHERE p.payment_date > '2026-03-31';
 
 
 -- 17. Display customers living in London with their payment details.
 SELECT c.full_name, co.city, p.amount, p.mode
-FROM customer AS c
-INNER JOIN address AS a
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id
-INNER JOIN country AS co
+JOIN
+country AS co
 ON a.city_id = co.city_id
-INNER JOIN payment AS p
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 WHERE co.city = 'London';
 
 
 -- 18. Display customer names and payment details for Cash or Net Banking payments.
 SELECT c.full_name, p.amount, p.mode, p.payment_date
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 WHERE p.mode IN ('Cash', 'Net Banking');
 
 
 -- 19. Display customers who live in India and have made a payment greater than ₹2,500.
 SELECT c.full_name, co.city, p.amount
-FROM customer AS c
-INNER JOIN address AS a
+FROM
+customer AS c
+JOIN
+address AS a
 ON c.address_id = a.address_id
-INNER JOIN country AS co
+JOIN
+country AS co
 ON a.city_id = co.city_id
-INNER JOIN payment AS p
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
-WHERE co.country = 'India'
-AND p.amount > 2500;
+WHERE co.country = 'India' AND p.amount > 2500;
 
 
 -- 20. Display all payment records for customers whose names start with A.
 SELECT c.full_name, p.amount, p.mode, p.payment_date
-FROM customer AS c
-INNER JOIN payment AS p
+FROM
+customer AS c
+JOIN
+payment AS p
 ON c.customer_id = p.customer_id
 WHERE c.full_name LIKE 'A%';
 
